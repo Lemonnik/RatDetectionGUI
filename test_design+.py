@@ -30,6 +30,8 @@ class ExampleApp(QtWidgets.QMainWindow, design.Ui_MainWindow):
 
         self.var_that_means_nothing = 0
 
+        self.video_analysis_mode = 1  # 1 если обрабатываем видео, 0 если обрабатываем лапы и строим графики
+
         # self.setTransformationAnchor(QtWidgets.QGraphicsView.AnchorUnderMouse)
         # self.setResizeAnchor(QtWidgets.QGraphicsView.AnchorUnderMouse)
         ########################################################################################################
@@ -43,13 +45,16 @@ class ExampleApp(QtWidgets.QMainWindow, design.Ui_MainWindow):
         # OPEN / SAVE
         self.btnBrowse_3.clicked.connect(self.browse_folder)  # Open file
         self.actionOpen.triggered.connect(self.browse_folder)  # Open option from upper menu
-        self.actionOpen.setStatusTip('Open File')  # !Status bar was not created in this version
+        self.actionOpen.setStatusTip('Open File')  # !Status bar was not created in this version (это полосочка снизу)
         self.btnSave.clicked.connect(self.extract_values)  # Save paws coordinates
         self.actionSave_as.triggered.connect(self.extract_values)  # Save option from upper menu
         self.actionSave_as.setStatusTip('Save file as')  # !Status bar was not created in this version
 
+        # CHANGE VIDEO/DATA ANALYSIS windows
+        self.actionVideo_Analysis.triggered.connect(self.change_mode_to_video)
+        self.actionPaws_Analysis.triggered.connect(self.change_mode_to_paws)
 
-
+        # ABOUT
         self.actionAbout.triggered.connect(self.about_popup)
 
         # self.left = 100
@@ -114,6 +119,21 @@ class ExampleApp(QtWidgets.QMainWindow, design.Ui_MainWindow):
         # self.viewer.fitInView()
 
 
+    ########################### upper menu triggers ###########################
+    def change_mode_to_video(self):
+        if not self.video_analysis_mode:
+            self.video_analysis_mode = 1
+            self.centralwidget = QtWidgets.QWidget(MainWindow)
+            set.setCentralWidget(self.centralwidget)
+
+    def change_mode_to_paws(self):
+        if self.video_analysis_mode:
+            self.video_analysis_mode = 0
+            self.textEdit = QtWidgets.QTextEdit()
+            self.setCentralWidget(self.textEdit)
+        
+
+
 
     def browse_folder(self):
         file_name, _ = QtWidgets.QFileDialog.getOpenFileName(self, "Выберите файл")
@@ -126,9 +146,9 @@ class ExampleApp(QtWidgets.QMainWindow, design.Ui_MainWindow):
 
             self.textEdit.clear()  # Clear log field
             self.paw_centers = {1 : [],     ##
-                            2 : [],      # CLEAR
-                            3 : [],      # DICTIONARY
-                            4 : []}     ##
+                                2 : [],      # CLEAR
+                                3 : [],      # DICTIONARY
+                                4 : []}     ##
 
             self.textEdit.append("Открыт файл: "+file_name)  # добавить сообщение об открытии файла в textEdit 
             
@@ -140,6 +160,7 @@ class ExampleApp(QtWidgets.QMainWindow, design.Ui_MainWindow):
         msg.setText("If there is any issue please let me know:\nJust@Kidding.idc")
         x = msg.exec_()
 
+    #################################################################################
 
     def extract_values(self):
         file_name, _ = QtWidgets.QFileDialog.getSaveFileName(self, 'Save File')
@@ -195,6 +216,7 @@ class ExampleApp(QtWidgets.QMainWindow, design.Ui_MainWindow):
             )
         print('mediastate')
 
+    ########################### Video part ###########################
 
     def position_changed(self, position):
         self.videoSlider.setValue(position/1000)
@@ -270,6 +292,8 @@ class ExampleApp(QtWidgets.QMainWindow, design.Ui_MainWindow):
             # QtWidgets.QGraphicsView.mouseMoveEvent(self, event)
         # super(Viewer, self).mouseMoveEvent(event)
     ###########################################################################################################################################
+
+
 
 
 def main():
