@@ -1,0 +1,1 @@
+pyuic5 test_design.ui -o design.py
