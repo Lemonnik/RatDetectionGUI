@@ -1,4 +1,4 @@
-# анализ результатов обсчёта
+# Analyse results from main program
 
 import pandas as pd
 import numpy as np
