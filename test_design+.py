@@ -1,4 +1,4 @@
-# надстройка на дизайном для обработки и анализа видео (и по совместительству ОСНОВНАЯ ПРОГА)
+# The main program
 
 import sys  # sys нужен для передачи argv в QApplication
 from PyQt5 import QtWidgets, QtGui, QtMultimedia, QtCore
