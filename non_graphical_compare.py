@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 import math
 
 
-px_2_sm = lambda pxels: 0.081578328*pxels+ 0.16621237  # через LAMBDA и MAP конвертим списки в пикселях в САНТИМЕТРОВЫЕ
+px_2_sm = lambda pxels: 0.081578328*pxels+ 0.16621237  # function to convert pixels to centimetres
 
 
 with open('Samples/before_control.txt', 'r') as f:
