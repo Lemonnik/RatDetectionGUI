@@ -5,7 +5,7 @@ from PyQt5.QtMultimedia import *
 from PyQt5.QtMultimediaWidgets import QVideoWidget
 
 class SongSlider(QWidget):
-
+    
     moved = pyqtSignal(int)
     print('initialize '+str(moved))
 
